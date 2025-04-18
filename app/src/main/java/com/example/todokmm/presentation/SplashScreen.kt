@@ -1,30 +1,22 @@
 package com.example.todokmm.presentation
 
-import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
 import com.example.todokmm.R
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(onSplashFinished: () -> Unit) {
-    // Get the context using LocalContext
-    val context = LocalContext.current
+    // Remove the audio and play the splash screen without sound
 
-    // Create a MediaPlayer instance to play audio
-    val mediaPlayer = remember { MediaPlayer.create(context, R.raw.splash_audio) }
-
-    // Play the audio when the composable is first launched
     LaunchedEffect(Unit) {
-        mediaPlayer.start()  // Start playing the audio
-        delay(4000)  // Keep the splash screen for 2 seconds
-        mediaPlayer.release()  // Release the media player resources after the audio is finished
+        delay(3000)  // time interval for splash screen
         onSplashFinished()  // Trigger the completion callback
     }
 
@@ -32,11 +24,18 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        // Background image
         Image(
             painter = painterResource(id = R.drawable.splashhehe),
             contentDescription = "Splash Screen Image",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
+        )
+
+        // Loading spinner centered over the image
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+            color = androidx.compose.ui.graphics.Color.White
         )
     }
 }
